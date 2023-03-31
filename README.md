@@ -1,3 +1,3 @@
 # Vitalii Shvets
 ## Home Task: OOP
-Class hiererchy is written in OOPTask->OOPTask->Program.cs
+Class hierarchy is written in OOPTask->OOPTask->Program.cs
