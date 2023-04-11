@@ -14,7 +14,8 @@ namespace BasicKnowledge
             {
                 for (int j = i; j < arr.Length; j++)
                 {
-                    if (arr[i] + arr[j] == target) { count++; }
+                    if (arr[i] + arr[j] == target && i != j) { 
+                        count++; }
                 }
             }
             return count;
@@ -34,6 +35,15 @@ namespace BasicKnowledge
         }
         [Test]
         public void Test2()
+        {
+            int[] arr = new int[] { 1, 3, 6, 2, 2, 0, 4, 5 };
+            int target = 0;
+            int actual = new Task4().PairsNumber(arr, target);
+            int expected = 0;
+            Assert.AreEqual(expected, actual);
+        }
+        [Test]
+        public void Test3()
         {
             int[] arr = new int[] { 1, 3, 6, 2, 2, 0, 4, 5 };
             int target = 9;
