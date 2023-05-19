@@ -1,31 +1,23 @@
 using System;
 using TechTalk.SpecFlow;
-using WebAPI.Drivers;
+using WebAPI.DropBox.Impl;
 
 namespace WebAPI.StepDefinitions
 {
     [Binding]
     public class UploadStepDefinitions
     {
-        HttpResponseMessage response;
-        [Given(@"I check if the file exists for upload")]
-        public void GivenICheckIfTheFileExistsForUpload()
-        {
-            WebApiDriver webApi = new();
-            webApi.IfExistsLocally(Settings.FilePath).Should().BeTrue();
-        }
-
+        private WebApiClientImpl webApiClient;
         [When(@"I upload the file")]
         public void WhenIUploadTheFile()
-        {
-            WebApiDriver webApi = new();
-            response = webApi.Upload(Settings.FilePath, Settings.DropBoxFilePath);
+        {   
+            webApiClient = WebApiClientImpl.GetWebApiClient();
+            webApiClient.Upload(Settings.FilePath, Settings.DropBoxFilePath).IsSuccessStatusCode.Should().BeTrue();
         }
-
-        [Then(@"I should get upload success status code")]
-        public void ThenIShouldGetUploadSuccessStatusCode()
+        [Then(@"I should see the file in the dropbox")]
+        public void ThenIShouldSeeTheFileInTheDropbox()
         {
-            response.IsSuccessStatusCode.Should().BeTrue();
+            webApiClient.IfExist(Settings.DropBoxFolder, Settings.FileName).Should().BeTrue();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿Feature: 2 GetMetaData
+﻿Feature: GetMetaData
 
-@tag2
+@getmetadata
 Scenario: Get file metadata from dropbox
 	Given I check if file exists to get metadata
 	When I get the file metadata
-	Then I should get metadata success status code
+	Then I should get metadata

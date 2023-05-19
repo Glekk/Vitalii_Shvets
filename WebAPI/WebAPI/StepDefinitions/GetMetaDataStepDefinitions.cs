@@ -1,33 +1,36 @@
 using System;
 using TechTalk.SpecFlow;
-using WebAPI.Drivers;
+using WebAPI.DropBox.Impl;
 
 namespace WebAPI.StepDefinitions
 {
     [Binding]
     public class GetMetaDataStepDefinitions
     {
-        HttpResponseMessage response;
+        private WebApiClientImpl webApiClient;
+        private string metadata;
         [Given(@"I check if file exists to get metadata")]
         public void GivenICheckIfFileExistsToGetMetadata()
         {
-            WebApiDriver webApi = new();
-            webApi.IfExist(Settings.DropBoxFolder, Settings.FileName).Should().BeTrue();
+            webApiClient = WebApiClientImpl.GetWebApiClient();
+            webApiClient.IfExist(Settings.DropBoxFolder, Settings.FileName).Should().BeTrue();
           
         }
 
         [When(@"I get the file metadata")]
         public void WhenIGetTheFileMetadata()
         {
-            WebApiDriver webApi = new();
-            response = webApi.GetMetaData(Settings.DropBoxFilePath);
-              
+            metadata = string.Empty;
+            HttpResponseMessage response = webApiClient.GetMetaData(Settings.DropBoxFilePath);
+            response.IsSuccessStatusCode.Should().BeTrue();
+            metadata = response.Content.ReadAsStringAsync().Result;
         }
 
-        [Then(@"I should get metadata success status code")]
-        public void ThenIShouldGetMetadataSuccessStatusCode()
+        [Then(@"I should get metadata")]
+        public void ThenIShouldGetMetadata()
         {
-            response.IsSuccessStatusCode.Should().BeTrue();
+             metadata.Should().Contain(Settings.FileName);
         }
+
     }
 }

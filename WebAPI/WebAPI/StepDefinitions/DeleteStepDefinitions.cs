@@ -1,31 +1,33 @@
 using System;
 using TechTalk.SpecFlow;
-using WebAPI.Drivers;
+using NUnit.Framework;
+using WebAPI.DropBox.Impl;
 
 namespace WebAPI.StepDefinitions
 {
     [Binding]
     public class DeleteStepDefinitions
     {
-        HttpResponseMessage response;
+        private WebApiClientImpl webApiClient;
+        
         [Given(@"I check if file exists for delete")]
         public void GivenICheckIfFileExistsForDelete()
         {
-            WebApiDriver webApi = new();
-            webApi.IfExistsLocally(Settings.FilePath).Should().BeTrue();
+            webApiClient = WebApiClientImpl.GetWebApiClient();
+            webApiClient.IfExist(Settings.DropBoxFolder, Settings.FileName);
         }
 
         [When(@"I delete file from dropbox")]
         public void WhenIDeleteFileFromDropbox()
         {
-            WebApiDriver driver = new();
-            response = driver.Delete(Settings.DropBoxFilePath);
+            webApiClient.Delete(Settings.DropBoxFilePath).IsSuccessStatusCode.Should().BeTrue();
         }
 
-        [Then(@"I should get delete success status code")]
-        public void ThenIShouldGetDeleteSuccessStatusCode()
+        [Then(@"I should not see the file in dropbox")]
+        public void ThenIShouldNotSeeTheFileInDropbox()
         {
-            response.IsSuccessStatusCode.Should().BeTrue();
+            webApiClient.IfExist(Settings.DropBoxFolder, Settings.FileName).Should().BeFalse();
         }
+
     }
 }

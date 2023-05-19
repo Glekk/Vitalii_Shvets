@@ -3,7 +3,7 @@
     internal class Settings
     {
         public static readonly string BaseUrl = "http://localhost:8080";
-        public static readonly string Token = "sl.BeS9y95ZE9K7YrV9RyzDJHULdZMuy1rCwZpA0C6qpQMgAIWtAvZHnVhNO2koBcphQTs3VUkjQ5DstXbCiaTyGT_ScUb3myWEmNNS6isz7Ip7428UQFqp3aEePyZQJJIWm28H9MVK";
+        public static readonly string Token = "sl.Beoi91G87jnBEb695TWcG_fBW2lBDT6L9Z2AuHfotLK4v3V7brjePg1g-ak-M6Em1-FwUo4w7Fh72XCY-bLKEry6vpcltMa-GjUXfUhVOvX-ldiSLKEJCKHG0ZpKfMaqNjVJZ6au";
         public static readonly string FilePath = @"C:\Users\Vitaliy\Desktop\3_course\SDT\WebAPI\Vitalii_Shvets\WebAPI\WebAPI\Files\file.txt";
         public static readonly string DropBoxFilePath = "/WebAPI/file.txt";
         public static readonly string DropBoxFolder= "/WebAPI";
